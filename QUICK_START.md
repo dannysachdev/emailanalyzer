@@ -33,7 +33,7 @@ This will:
 4. Generate all output files
 
 **Time**: ~60 seconds  
-**Outputs**: 5 files ready for use
+**Outputs**: 6 files ready for use (including comprehensive email details)
 
 ### Option 2: Run Individual Steps
 
@@ -57,36 +57,46 @@ Output: `enriched_contacts.csv`, `high_quality_leads.csv`
 
 ## Output Files Explained
 
-### 1. analysis_report.txt
+### 1. comprehensive_email_details.csv
+📥 **ALL EMAIL DATA IN ONE FILE**
+- Complete details for all 50,215 emails in a single CSV
+- Columns: Email Filename, Category, From, **To**, Subject, Date, **Body Preview**
+- **To field**: Shows who the emails were sent to
+- **Body Preview**: First 500 characters of email body
+- Use for: Complete email analysis, importing to databases, spreadsheet analysis
+
+### 2. analysis_report.txt
 📊 **Detailed email categorization report**
 - 50,215 emails categorized into 12 types
 - Full listings of each category
 - Use for: Understanding email campaign results
 
-### 2. categories.json
+### 3. categories.json
 📁 **Machine-readable email categories**
 - JSON format for programmatic access
 - Use for: API integration, custom processing
 
-### 3. email_categories.csv
+### 4. email_categories.csv
 📊 **All emails with categories in CSV format (50,215 emails)**
 - Each email with its assigned category
 - Columns: Email Filename, Category, Category Name
 - Use for: Spreadsheet analysis, filtering, pivot tables
 
-### 4. enriched_contacts.csv
+### 5. enriched_contacts.csv
 👥 **Full contact database (388 contacts)**
 - Sorted by lead score (highest first)
-- Includes: name, email, phone, title, company
+- Includes: name, email, phone, title, company, **To**, **Body**
+- **New**: Now includes To field (recipients) and Body preview
 - Use for: CRM import, full contact list
 
-### 5. high_quality_leads.csv
+### 6. high_quality_leads.csv
 ⭐ **Best leads only (245 contacts)**
 - Score ≥ 70 (high quality)
 - Ready for immediate action
+- **New**: Includes To field and Body preview
 - Use for: Priority follow-up, LinkedIn outreach
 
-### 6. extracted_contacts.json
+### 7. extracted_contacts.json
 📋 **Raw contact data in JSON**
 - All extracted information
 - Use for: Custom processing, database import
@@ -112,6 +122,27 @@ Output: `enriched_contacts.csv`, `high_quality_leads.csv`
 3. Veeam (12 contacts)
 4. Diligent (10 contacts)
 5. D&H Distributing (5 contacts)
+
+## 📥 Download All Email Details
+
+**Want everything in one file?** Use `comprehensive_email_details.csv`:
+
+```bash
+# After running the analysis, this file contains:
+# - All 50,215 emails with their details
+# - To field (who emails were sent to)
+# - Body preview (first 500 characters)
+# - Category, From, Subject, Date
+# Perfect for importing to Excel, Google Sheets, or databases
+```
+
+**File size**: ~6-8 MB  
+**Format**: Standard CSV (opens in any spreadsheet app)  
+**Use cases**:
+- Import to database for analysis
+- Filter and search email bodies
+- See who received each email (To field)
+- Analyze email content patterns
 
 ## Next Steps
 

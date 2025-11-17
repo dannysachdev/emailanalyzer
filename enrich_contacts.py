@@ -337,7 +337,9 @@ class ContactEnricher:
                 'LinkedIn Search',
                 'Category',
                 'Original Subject',
-                'Date'
+                'Date',
+                'To',
+                'Body'
             ])
             
             # Sort by lead score (highest first)
@@ -361,7 +363,9 @@ class ContactEnricher:
                     contact.get('linkedin_search', ''),
                     contact.get('category', ''),
                     contact.get('original_subject', ''),
-                    contact.get('date', '')
+                    contact.get('date', ''),
+                    contact.get('to', ''),
+                    contact.get('body', '')
                 ])
         
         print(f"✓ Saved enriched contacts to: {output_file}")
@@ -392,7 +396,9 @@ class ContactEnricher:
                 'Job Title',
                 'Company',
                 'LinkedIn Search',
-                'Response Type'
+                'Response Type',
+                'To',
+                'Body'
             ])
             
             for contact in sorted(high_quality, key=lambda x: x.get('lead_score', 0), reverse=True):
@@ -404,7 +410,9 @@ class ContactEnricher:
                     contact.get('title', ''),
                     contact.get('company_enriched', ''),
                     contact.get('linkedin_search', ''),
-                    contact.get('response_type', '')
+                    contact.get('response_type', ''),
+                    contact.get('to', ''),
+                    contact.get('body', '')
                 ])
         
         print(f"✓ Exported {len(high_quality)} high quality leads to: {output_file}")

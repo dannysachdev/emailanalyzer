@@ -2,9 +2,20 @@
 
 A Python tool to analyze and categorize large volumes of emails into different types.
 
+## 📥 Single File Download - All Email Details
+
+**NEW!** The analyzer now generates a **comprehensive CSV file with ALL email details in one file**:
+- ✅ All emails in a single downloadable file
+- ✅ Includes **To** field (recipients)
+- ✅ Includes **Body** preview (first 500 chars)
+- ✅ Includes From, Subject, Date, Category
+- ✅ Perfect for importing to databases or spreadsheets
+
+📖 **See [COMPREHENSIVE_EXPORT.md](COMPREHENSIVE_EXPORT.md) for detailed documentation**
+
 ## 📥 Sample CSV Files Available
 
-**NEW!** Sample CSV files are now available in the repository for easy download:
+Sample CSV files are available in the repository for easy download:
 - [`sample_email_categories.csv`](sample_email_categories.csv) - Email categorization examples
 - [`sample_enriched_contacts.csv`](sample_enriched_contacts.csv) - Enriched contact database sample
 - [`sample_high_quality_leads.csv`](sample_high_quality_leads.csv) - High-quality leads sample
@@ -129,14 +140,28 @@ This executes:
 3. Contact enrichment (enrich_contacts.py)
 
 **Output files:**
-- `enriched_contacts.csv` - Full enriched contact database sorted by lead score
-- `high_quality_leads.csv` - Only high-quality leads (score ≥ 70)
-- `extracted_contacts.csv` - Raw extracted contact data
+- **`comprehensive_email_details.csv`** - 📥 **ALL email data in ONE file** (includes To, Body, From, Category)
+- `enriched_contacts.csv` - Full enriched contact database sorted by lead score (includes To and Body)
+- `high_quality_leads.csv` - Only high-quality leads (score ≥ 70, includes To and Body)
+- `extracted_contacts.csv` - Raw extracted contact data (includes To and Body)
 - `email_categories.csv` - All emails with their categories in CSV format
 - `analysis_report.txt` - Detailed email categorization report
 - `categories.json` - Email categories in JSON format
 
 💡 **Tip:** Check out the [sample CSV files](SAMPLE_CSV_README.md) to see the output format before running the analysis!
+
+### 📥 Comprehensive Email Details
+
+The `comprehensive_email_details.csv` file contains **ALL email information in a single downloadable file**, including:
+- Email filename
+- Category and category name
+- **From** address
+- **To** address (recipients)
+- Subject line
+- Date
+- **Body preview** (first 500 characters)
+
+This file is perfect for importing into spreadsheets or databases for further analysis!
 
 ## Requirements
 

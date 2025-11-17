@@ -22,6 +22,13 @@ extracted_contacts.csv
 enriched_contacts.json
 enriched_contacts.csv
 high_quality_leads.csv
+comprehensive_email_details.csv
+
+# Test files
+test_emails/
+test_*.csv
+test_*.json
+test_comprehensive_export.py
 
 # Allow sample CSV files
 !sample_*.csv
