@@ -16,3 +16,8 @@ venv/
 # Analysis outputs
 categories.json
 analysis_report.txt
+extracted_contacts.json
+extracted_contacts.csv
+enriched_contacts.json
+enriched_contacts.csv
+high_quality_leads.csv

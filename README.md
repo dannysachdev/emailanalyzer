@@ -76,6 +76,54 @@ Messages from email security systems:
 - Spam detection systems
 - Blocked sender notifications
 
+## Contact Extraction & Enrichment
+
+Beyond categorization, the tool can extract and enrich contact information from responses:
+
+### Extract Contact Info
+Extracts detailed contact information from replies, out-of-office messages, and automatic replies:
+- Email addresses (primary and alternate)
+- Phone numbers
+- Names
+- Job titles
+- Company names
+
+```bash
+python3 extract_contact_info.py
+```
+
+### Enrich Contact Database
+Enriches extracted contacts with additional data:
+- Lead scoring (prioritizes high-quality contacts)
+- Domain analysis (corporate vs free email)
+- Company name inference from email domain
+- Name inference from email address
+- LinkedIn search strings
+- Response type categorization
+
+```bash
+python3 enrich_contacts.py
+```
+
+### Run Full Pipeline
+Run all steps in sequence with a single command:
+
+```bash
+python3 run_full_analysis.py
+```
+
+This executes:
+1. Email categorization (analyze_emails.py)
+2. Contact extraction (extract_contact_info.py)
+3. Contact enrichment (enrich_contacts.py)
+
+**Output files:**
+- `enriched_contacts.csv` - Full enriched contact database sorted by lead score
+- `high_quality_leads.csv` - Only high-quality leads (score ≥ 70)
+- `extracted_contacts.csv` - Raw extracted contact data
+- `analysis_report.txt` - Detailed email categorization report
+- `categories.json` - Email categories in JSON format
+
 ## Requirements
 
 - Python 3.6+
