@@ -206,6 +206,294 @@ Use **extracted_contacts.csv** or the JSON files for programmatic access
 
 ---
 
+## Working with CSV Files - Code Examples
+
+This section provides practical code examples for reading and extracting data from the generated CSV files.
+
+### Python Examples
+
+#### Example 1: Read Email Categories (Standard Library)
+```python
+import csv
+
+# Read and display email categories
+with open('email_categories.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(f"File: {row['Email Filename']}")
+        print(f"Category: {row['Category Name']}")
+        print()
+```
+
+#### Example 2: Filter by Category
+```python
+import csv
+
+# Find all replies
+with open('email_categories.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    replies = [row for row in reader if row['Category'] == 'replies']
+    print(f"Found {len(replies)} reply emails")
+    
+    # Display first 5 replies
+    for reply in replies[:5]:
+        print(f"  - {reply['Email Filename']}")
+```
+
+#### Example 3: Read Enriched Contacts
+```python
+import csv
+
+# Read contact database
+with open('enriched_contacts.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    
+    for row in reader:
+        print(f"Name: {row['Name']}")
+        print(f"Email: {row['Primary Email']}")
+        print(f"Lead Score: {row['Lead Score']}")
+        print(f"Company: {row['Company']}")
+        print()
+```
+
+#### Example 4: Filter High-Quality Leads with Phone Numbers
+```python
+import csv
+
+# Find contacts with lead score >= 90 AND phone numbers
+with open('enriched_contacts.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    
+    top_leads_with_phone = [
+        row for row in reader 
+        if int(row['Lead Score']) >= 90 and row['Primary Phone']
+    ]
+    
+    print(f"Found {len(top_leads_with_phone)} top leads with phone numbers:")
+    for lead in top_leads_with_phone:
+        print(f"  {lead['Name']} - {lead['Primary Email']} - {lead['Primary Phone']}")
+```
+
+#### Example 5: Extract Specific Company Contacts
+```python
+import csv
+
+# Find all contacts from a specific company
+target_company = "Fortinet"
+
+with open('enriched_contacts.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    company_contacts = [
+        row for row in reader 
+        if target_company.lower() in row['Company'].lower()
+    ]
+    
+    print(f"Found {len(company_contacts)} contacts from {target_company}:")
+    for contact in company_contacts:
+        print(f"  {contact['Name']} ({contact['Job Title']})")
+        print(f"    Email: {contact['Primary Email']}")
+        print(f"    Phone: {contact['Primary Phone']}")
+        print()
+```
+
+#### Example 6: Using Pandas for Advanced Analysis
+```python
+import pandas as pd
+
+# Read CSV with pandas
+df = pd.read_csv('enriched_contacts.csv')
+
+# Display basic statistics
+print("Contact Database Summary:")
+print(f"Total contacts: {len(df)}")
+print(f"Contacts with phones: {df['Primary Phone'].notna().sum()}")
+print(f"Average lead score: {df['Lead Score'].mean():.1f}")
+
+# Group by company and count
+top_companies = df['Company'].value_counts().head(10)
+print("\nTop 10 Companies:")
+print(top_companies)
+
+# Filter and export
+high_quality = df[df['Lead Score'] >= 90]
+high_quality.to_csv('my_top_leads.csv', index=False)
+print(f"\nExported {len(high_quality)} high-quality leads to my_top_leads.csv")
+```
+
+#### Example 7: Search Email Bodies for Keywords
+```python
+import csv
+
+# Search comprehensive email details for specific keywords
+keywords = ["interested", "schedule", "meeting"]
+
+with open('comprehensive_email_details.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    
+    matches = []
+    for row in reader:
+        body = row.get('Body Preview', '').lower()
+        if any(keyword in body for keyword in keywords):
+            matches.append(row)
+    
+    print(f"Found {len(matches)} emails containing keywords: {', '.join(keywords)}")
+    
+    # Display first 5 matches
+    for match in matches[:5]:
+        print(f"\nFrom: {match['From']}")
+        print(f"Subject: {match['Subject']}")
+        print(f"Body: {match['Body Preview'][:100]}...")
+```
+
+### JavaScript/Node.js Examples
+
+#### Example 8: Read CSV with Node.js
+```javascript
+const fs = require('fs');
+const csv = require('csv-parser');
+
+// Read enriched contacts
+const contacts = [];
+
+fs.createReadStream('enriched_contacts.csv')
+  .pipe(csv())
+  .on('data', (row) => {
+    contacts.push(row);
+  })
+  .on('end', () => {
+    console.log(`Loaded ${contacts.length} contacts`);
+    
+    // Filter high-quality leads
+    const highQualityLeads = contacts.filter(c => parseInt(c['Lead Score']) >= 80);
+    console.log(`High-quality leads: ${highQualityLeads.length}`);
+    
+    // Display top 5
+    highQualityLeads.slice(0, 5).forEach(lead => {
+      console.log(`${lead.Name} - ${lead['Primary Email']} (Score: ${lead['Lead Score']})`);
+    });
+  });
+```
+
+**Note**: Install the csv-parser package first: `npm install csv-parser`
+
+### Command-Line Examples
+
+#### Example 9: Using standard Unix tools
+```bash
+# Count total emails
+wc -l email_categories.csv
+
+# Count replies
+grep ",replies," email_categories.csv | wc -l
+
+# Extract all reply emails
+grep ",replies," email_categories.csv > replies_only.csv
+
+# View high-quality leads (score >= 90)
+head -1 enriched_contacts.csv > top_leads.csv
+awk -F',' '$1 >= 90' enriched_contacts.csv >> top_leads.csv
+
+# Search for specific company
+grep -i "fortinet" enriched_contacts.csv
+
+# Get unique companies
+cut -d',' -f8 enriched_contacts.csv | sort | uniq
+```
+
+#### Example 10: Using csvkit for Advanced Operations
+```bash
+# Install csvkit: pip install csvkit
+
+# View first 10 rows nicely formatted
+csvlook enriched_contacts.csv | head -n 20
+
+# Get summary statistics
+csvstat enriched_contacts.csv
+
+# Filter contacts with phone numbers
+csvgrep -c "Primary Phone" -r ".+" enriched_contacts.csv > contacts_with_phones.csv
+
+# Sort by lead score (descending)
+csvsort -c "Lead Score" -r enriched_contacts.csv > sorted_leads.csv
+
+# Convert to JSON
+csvjson enriched_contacts.csv > contacts.json
+
+# Search email bodies for keywords
+csvgrep -c "Body Preview" -m "interested" comprehensive_email_details.csv
+```
+
+### SQL Examples (After Import)
+
+#### Example 11: Import to SQLite and Query
+```bash
+# Import to SQLite database
+sqlite3 emails.db << EOF
+.mode csv
+.import email_categories.csv email_categories
+.import enriched_contacts.csv enriched_contacts
+EOF
+```
+
+```sql
+-- Query examples
+-- Count emails by category
+SELECT Category_Name, COUNT(*) as Count 
+FROM email_categories 
+GROUP BY Category_Name 
+ORDER BY Count DESC;
+
+-- Find top leads
+SELECT Name, Primary_Email, Lead_Score, Company 
+FROM enriched_contacts 
+WHERE Lead_Score >= 90 
+ORDER BY Lead_Score DESC;
+
+-- Find contacts from specific companies
+SELECT Name, Primary_Email, Job_Title, Company 
+FROM enriched_contacts 
+WHERE Company IN ('Fortinet', 'Veeam', 'Diligent')
+ORDER BY Company, Lead_Score DESC;
+```
+
+### Excel/Google Sheets Tips
+
+#### Working with Large Files
+1. **Excel**: Use "Data" → "From Text/CSV" → Select file → Load
+2. **Google Sheets**: File → Import → Upload → select file
+3. **LibreOffice Calc**: File → Open → Select CSV → Adjust import settings
+
+#### Common Operations
+- **Filter by category**: Use AutoFilter (Data → Filter)
+- **Sort by lead score**: Select column → Sort Z to A
+- **Find keywords in body**: Use Ctrl+F (Find & Replace)
+- **Create pivot tables**: Insert → PivotTable
+- **Extract subsets**: Filter → Copy visible cells → Paste to new sheet
+
+### Best Practices
+
+1. **Always use UTF-8 encoding** when opening CSV files to handle special characters
+2. **Keep original files** - work on copies when filtering or modifying data
+3. **Use pandas or csvkit** for large files (50,000+ rows) for better performance
+4. **Validate data** after import to ensure no rows were skipped
+5. **Handle special characters** - fields with commas are enclosed in quotes automatically
+
+### Common Issues and Solutions
+
+**Issue**: File won't open in Excel  
+**Solution**: Use "Data" → "From Text/CSV" instead of double-clicking the file
+
+**Issue**: Special characters appear as gibberish  
+**Solution**: Ensure UTF-8 encoding is selected during import
+
+**Issue**: Filtering is slow  
+**Solution**: Import to a database (SQLite, PostgreSQL) for faster queries
+
+**Issue**: Need to merge multiple CSV files  
+**Solution**: Use pandas `concat()` or csvkit's `csvstack` command
+
+---
+
 ## Next Steps
 
 1. **Import to CRM**: Upload enriched_contacts.csv to your CRM system
