@@ -132,11 +132,14 @@ class ContactInfoExtractor:
             'company': '',
             'original_subject': '',
             'date': '',
+            'to': '',
+            'body': '',
         }
         
         # Get basic info from headers
         contact['original_subject'] = msg.get('Subject', '')
         contact['date'] = msg.get('Date', '')
+        contact['to'] = msg.get('To', '')
         
         # Extract from From header
         from_header = msg.get('From', '')
@@ -178,6 +181,9 @@ class ContactInfoExtractor:
             pass
         
         if body:
+            # Store the body (limit to first 2000 chars for CSV compatibility)
+            contact['body'] = body[:2000].replace('\n', ' ').replace('\r', ' ').strip()
+            
             # Extract phones
             phones = self.extract_phone_numbers(body)
             contact['phones'].extend(phones)
@@ -301,7 +307,9 @@ class ContactInfoExtractor:
                 'Company',
                 'Category',
                 'Original Subject',
-                'Date'
+                'Date',
+                'To',
+                'Body'
             ])
             
             for contact in self.contacts:
@@ -314,7 +322,9 @@ class ContactInfoExtractor:
                     contact['company'],
                     contact['category'],
                     contact['original_subject'],
-                    contact['date']
+                    contact['date'],
+                    contact['to'],
+                    contact['body']
                 ])
         
         print(f"✓ Saved contacts to: {output_file}")

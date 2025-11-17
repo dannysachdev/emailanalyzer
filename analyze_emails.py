@@ -284,6 +284,77 @@ class EmailAnalyzer:
         
         print(f"Categories CSV saved to: {output_file}")
     
+    def save_comprehensive_csv(self, output_file='comprehensive_email_details.csv'):
+        """Save all email details including To, Body, and category to a single comprehensive CSV file"""
+        print(f"\nGenerating comprehensive email details file...")
+        
+        with open(output_file, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                'Email Filename',
+                'Category',
+                'Category Name',
+                'From',
+                'To',
+                'Subject',
+                'Date',
+                'Body Preview'
+            ])
+            
+            total_emails = sum(len(emails) for emails in self.categories.values())
+            processed = 0
+            
+            # Process all emails with their categories
+            for category, email_files in sorted(self.categories.items()):
+                category_name = category.replace('_', ' ').title()
+                
+                for email_file in sorted(email_files):
+                    processed += 1
+                    if processed % 5000 == 0:
+                        print(f"Progress: {processed}/{total_emails} emails processed...")
+                    
+                    filepath = self.emails_dir / email_file
+                    if not filepath.exists():
+                        continue
+                    
+                    # Parse email to get full details
+                    msg = self.parse_email(filepath)
+                    if msg:
+                        from_addr = msg.get('From', '')
+                        to_addr = msg.get('To', '')
+                        subject = msg.get('Subject', '')
+                        date = msg.get('Date', '')
+                        
+                        # Get email body (first 500 chars for preview)
+                        body = ''
+                        try:
+                            if msg.is_multipart():
+                                for part in msg.walk():
+                                    if part.get_content_type() == 'text/plain':
+                                        body = part.get_payload(decode=True).decode('utf-8', errors='ignore')
+                                        break
+                            else:
+                                body = msg.get_payload(decode=True).decode('utf-8', errors='ignore')
+                        except:
+                            body = ''
+                        
+                        # Clean and limit body for CSV
+                        if body:
+                            body = body[:500].replace('\n', ' ').replace('\r', ' ').strip()
+                        
+                        writer.writerow([
+                            email_file,
+                            category,
+                            category_name,
+                            from_addr,
+                            to_addr,
+                            subject,
+                            date,
+                            body
+                        ])
+        
+        print(f"✓ Comprehensive email details saved to: {output_file}")
+    
     def print_summary(self):
         """Print a summary of the analysis"""
         total = sum(len(emails) for emails in self.categories.values())
@@ -335,11 +406,15 @@ def main():
     # Save categories to CSV
     analyzer.save_categories_csv('email_categories.csv')
     
+    # Save comprehensive details to CSV
+    analyzer.save_comprehensive_csv('comprehensive_email_details.csv')
+    
     print("\n✓ Analysis complete!")
     print("  - Summary displayed above")
     print("  - Detailed report: analysis_report.txt")
     print("  - JSON data: categories.json")
     print("  - CSV data: email_categories.csv")
+    print("  - Comprehensive details: comprehensive_email_details.csv (includes To, Body)")
 
 
 if __name__ == '__main__':

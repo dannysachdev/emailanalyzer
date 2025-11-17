@@ -76,12 +76,14 @@ def main():
     print("=" * 80)
     print(f"\nTotal time: {total_elapsed:.1f} seconds ({total_elapsed/60:.1f} minutes)")
     print("\nGenerated files:")
-    print("  1. analysis_report.txt - Detailed email categorization")
-    print("  2. categories.json - Email categories in JSON format")
-    print("  3. extracted_contacts.csv - Raw extracted contacts")
-    print("  4. enriched_contacts.csv - Enriched contact database (sorted by lead score)")
-    print("  5. high_quality_leads.csv - Best quality leads only")
+    print("  1. comprehensive_email_details.csv - ALL email details (To, Body, Category)")
+    print("  2. enriched_contacts.csv - Enriched contact database with To/Body")
+    print("  3. high_quality_leads.csv - Best quality leads with To/Body")
+    print("  4. extracted_contacts.csv - Raw extracted contacts with To/Body")
+    print("  5. analysis_report.txt - Detailed email categorization")
+    print("  6. categories.json - Email categories in JSON format")
     print("\n✓ All analysis complete! Check the files above for results.")
+    print("\n📥 Main file: comprehensive_email_details.csv contains ALL email data in ONE file!")
     
     return 0
 
