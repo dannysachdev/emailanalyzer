@@ -8,7 +8,38 @@ The email analyzer has been run successfully on **50,215 emails**. Below is a su
 
 ## Generated CSV Files
 
-### 1. email_categories.csv
+### 1. comprehensive_email_details.csv ⭐ NEW!
+- **Size**: ~6-8 MB
+- **Rows**: 50,216 (including header)
+- **Description**: **ALL EMAIL DATA IN ONE FILE** - Complete details including To, Body, and Category
+- **Columns**:
+  - `Email Filename` - Name of the email file
+  - `Category` - Internal category code
+  - `Category Name` - Human-readable category name
+  - `From` - Sender email address
+  - `To` - Recipient email address(es)
+  - `Subject` - Email subject line
+  - `Date` - Email date/time
+  - `Body Preview` - First 500 characters of email body
+
+**Sample Data**:
+```csv
+Email Filename,Category,Category Name,From,To,Subject,Date,Body Preview
+"test_reply.eml","replies","Replies","john.doe@example.com","sales@company.com","Re: Business proposal","Mon, 14 Nov 2024 10:30:00 -0500","Hi, Thanks for reaching out! I'm interested..."
+```
+
+**Key Features**:
+- ✅ Single file with all email details
+- ✅ Includes recipient information (To field)
+- ✅ Includes email body content (first 500 chars)
+- ✅ Perfect for importing to databases or spreadsheets
+- ✅ Search through email bodies for keywords
+
+📖 **See [COMPREHENSIVE_EXPORT.md](COMPREHENSIVE_EXPORT.md) for detailed documentation**
+
+---
+
+### 2. email_categories.csv
 - **Size**: 5.8 MB
 - **Rows**: 50,216 (including header)
 - **Description**: Complete categorization of all emails
@@ -39,7 +70,7 @@ ACTION REQUIRED  Your email host is not configured correctly! - proofpoint-pps@p
 
 ---
 
-### 2. enriched_contacts.csv
+### 3. enriched_contacts.csv
 - **Size**: 114 KB
 - **Rows**: 389 (including header)
 - **Description**: Full enriched contact database with all 388 unique contacts
@@ -59,6 +90,8 @@ ACTION REQUIRED  Your email host is not configured correctly! - proofpoint-pps@p
   - `Category` - Email category
   - `Original Subject` - Subject line of original email
   - `Date` - Date of email
+  - `To` - Recipient email address(es) ⭐ NEW
+  - `Body` - Email body preview (first 2000 chars) ⭐ NEW
 
 **Sample Data**:
 ```csv
@@ -78,7 +111,7 @@ Lead Score,Name,Primary Email,Phone,Job Title,Company,Response Type
 
 ---
 
-### 3. high_quality_leads.csv
+### 4. high_quality_leads.csv
 - **Size**: 29 KB
 - **Rows**: 245 (including header)
 - **Description**: Filtered list of high-quality leads (lead score ≥ 70)
@@ -91,6 +124,8 @@ Lead Score,Name,Primary Email,Phone,Job Title,Company,Response Type
   - `Company` - Company name
   - `LinkedIn Search` - Suggested LinkedIn search string
   - `Response Type` - Type of response
+  - `To` - Recipient email address(es) ⭐ NEW
+  - `Body` - Email body preview ⭐ NEW
 
 **Sample Data**:
 ```csv
@@ -109,7 +144,7 @@ Lead Score,Name,Email,Phone,Job Title,Company,LinkedIn Search,Response Type
 
 ---
 
-### 4. extracted_contacts.csv
+### 5. extracted_contacts.csv
 - **Size**: 85 KB
 - **Rows**: 389 (including header)
 - **Description**: Raw extracted contact data (before enrichment)
@@ -123,6 +158,8 @@ Lead Score,Name,Email,Phone,Job Title,Company,LinkedIn Search,Response Type
   - `Category` - Email category
   - `Original Subject` - Subject line
   - `Date` - Date of email
+  - `To` - Recipient email address(es) ⭐ NEW
+  - `Body` - Email body preview (first 2000 chars) ⭐ NEW
 
 **Sample Data**:
 ```csv
@@ -152,11 +189,14 @@ jeremy@birddogsw.com,jeremy@birddogsw.com; sales@birddogsw.com,,8777945950,,,rep
 
 ## How to Use These Files
 
+### For Complete Email Analysis ⭐ NEW
+Use **comprehensive_email_details.csv** - ALL email data in one file (To, Body, Category, everything!)
+
 ### For CRM Import
-Use **enriched_contacts.csv** - Contains complete contact information with lead scores
+Use **enriched_contacts.csv** - Contains complete contact information with lead scores, To, and Body
 
 ### For Immediate Follow-up
-Use **high_quality_leads.csv** - Contains only the best quality leads ready for outreach
+Use **high_quality_leads.csv** - Contains only the best quality leads with To and Body
 
 ### For Email Campaign Analysis
 Use **email_categories.csv** - Shows complete breakdown of all email responses
