@@ -1,0 +1,18 @@
+Email Filename,Category,Category Name
+ACTION REQUIRED  Your email host is not configured correctly! - proofpoint-pps@ppops.net - 2025-11-14 1501.eml,action_required,Action Required
+ACTION REQUIRED  Your email host is not configured correctly! - proofpoint-pps@ppops.net - 2025-11-14 1502.eml,action_required,Action Required
+Undeliverable Permanent Failure - postmaster@example.com - 2025-11-14 0801.eml,bounces,Bounces
+Mail delivery failed returning message to sender - mailer-daemon@mail.server.com - 2025-11-14 0802.eml,bounces,Bounces
+Delivery Status Notification (Failure) - postmaster@company.com - 2025-11-14 0803.eml,bounces,Bounces
+Out of Office AutoReply - john.doe@fortinet.com - 2025-11-14 0901.eml,out_of_office,Out of Office
+Automatic reply Out of Office - jane.smith@veeam.com - 2025-11-14 0902.eml,out_of_office,Out of Office
+Re: Guaranteed meetings with content syndication - aheath@tkcincorporated.com - 2025-11-15 0702.eml,replies,Replies
+Re: Content syndication proposal - jeremy@birddogsw.com - 2025-11-14 1507.eml,replies,Replies
+Automatic Reply - info@company.com - 2025-11-14 1001.eml,automatic_replies,Automatic Replies
+Auto-Response Received your message - support@business.com - 2025-11-14 1002.eml,automatic_replies,Automatic Replies
+Spam Filter Alert - security@emailprotection.com - 2025-11-14 1101.eml,spam_filters,Spam Filters
+Security Alert Your account activity - security@company.com - 2025-11-14 1201.eml,security_alerts,Security Alerts
+Email Verification Required - verify@emailservice.com - 2025-11-14 1301.eml,verification_requests,Verification Requests
+Unsubscribe Confirmation - noreply@mailinglist.com - 2025-11-14 1401.eml,unsubscribe,Unsubscribe
+Contact Information Update - contact@company.com - 2025-11-14 1501.eml,contact_info,Contact Info
+General inquiry - info@business.com - 2025-11-14 1601.eml,other,Other

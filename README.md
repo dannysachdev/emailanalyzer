@@ -2,6 +2,16 @@
 
 A Python tool to analyze and categorize large volumes of emails into different types.
 
+## 📥 Sample CSV Files Available
+
+**NEW!** Sample CSV files are now available in the repository for easy download:
+- [`sample_email_categories.csv`](sample_email_categories.csv) - Email categorization examples
+- [`sample_enriched_contacts.csv`](sample_enriched_contacts.csv) - Enriched contact database sample
+- [`sample_high_quality_leads.csv`](sample_high_quality_leads.csv) - High-quality leads sample
+- [`sample_extracted_contacts.csv`](sample_extracted_contacts.csv) - Raw extracted contacts sample
+
+📖 See [SAMPLE_CSV_README.md](SAMPLE_CSV_README.md) for detailed documentation about these files.
+
 ## Overview
 
 This tool processes email files (.eml format) and automatically categorizes them into:
@@ -125,6 +135,8 @@ This executes:
 - `email_categories.csv` - All emails with their categories in CSV format
 - `analysis_report.txt` - Detailed email categorization report
 - `categories.json` - Email categories in JSON format
+
+💡 **Tip:** Check out the [sample CSV files](SAMPLE_CSV_README.md) to see the output format before running the analysis!
 
 ## Requirements
 
