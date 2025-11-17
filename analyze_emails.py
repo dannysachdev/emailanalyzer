@@ -284,6 +284,70 @@ class EmailAnalyzer:
         
         print(f"Categories CSV saved to: {output_file}")
     
+    def extract_original_recipient(self, msg, body, category):
+        """Extract the original recipient email address from bounce messages and other notifications"""
+        if not msg or not body:
+            return ''
+        
+        # For bounces, action_required, spam_filters, and auto-replies, 
+        # try to extract who the original email was sent to
+        
+        # Common patterns in bounce messages and notifications
+        patterns = [
+            # "The following message to <email@example.com>"
+            r'the following message to\s*<?([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})>?',
+            # "Your message to email@example.com"
+            r'your message to\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+            # "Your email to email@example.com"
+            r'your email to\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+            # "message to email@example.com failed"
+            r'message to\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s+(?:failed|could not)',
+            # "Delivery to email@example.com failed"
+            r'delivery (?:to|of your message to)\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+            # "recipient address rejected: email@example.com"
+            r'recipient address rejected:\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+            # "To: <email@example.com>" in body
+            r'To:\s*<?([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})>?',
+            # "email inbox email@example.com is no longer"
+            r'email inbox\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s+is no longer',
+            # "This email inbox email@example.com"
+            r'this email inbox\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+            # For action required: "to email@example.com with the Subject"
+            r'to\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s+with the subject',
+            # "delivering your message to email@example.com"
+            r'delivering your message to\s+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+        ]
+        
+        body_lower = body.lower()
+        
+        # Try each pattern
+        for pattern in patterns:
+            match = re.search(pattern, body_lower, re.IGNORECASE)
+            if match:
+                email_addr = match.group(1).lower()
+                # Filter out beeleads emails (those are the senders, not recipients)
+                if not any(domain in email_addr for domain in ['beeleads', 'danny@', 'claire@', 'emma@', 'brian@', 'maddie@']):
+                    return email_addr
+        
+        # Check email headers for original recipient info
+        headers_to_check = [
+            'X-Failed-Recipients',
+            'Original-Recipient',
+            'Final-Recipient',
+        ]
+        
+        for header in headers_to_check:
+            value = msg.get(header, '')
+            if value:
+                # Extract email from header value
+                match = re.search(r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', value)
+                if match:
+                    email_addr = match.group(1).lower()
+                    if not any(domain in email_addr for domain in ['beeleads', 'danny@', 'claire@', 'emma@', 'brian@', 'maddie@']):
+                        return email_addr
+        
+        return ''
+    
     def save_comprehensive_csv(self, output_file='comprehensive_email_details.csv'):
         """Save all email details including To, Body, and category to a single comprehensive CSV file"""
         print(f"\nGenerating comprehensive email details file...")
@@ -298,7 +362,8 @@ class EmailAnalyzer:
                 'To',
                 'Subject',
                 'Date',
-                'Body Preview'
+                'Body Preview',
+                'Original_Recipient'
             ])
             
             total_emails = sum(len(emails) for emails in self.categories.values())
@@ -338,9 +403,15 @@ class EmailAnalyzer:
                         except:
                             body = ''
                         
+                        # Extract original recipient (who the outbound email was sent to)
+                        full_body = body  # Keep full body for extraction
+                        
                         # Clean and limit body for CSV
                         if body:
                             body = body[:500].replace('\n', ' ').replace('\r', ' ').strip()
+                        
+                        # Extract original recipient email address
+                        original_recipient = self.extract_original_recipient(msg, full_body, category)
                         
                         writer.writerow([
                             email_file,
@@ -350,7 +421,8 @@ class EmailAnalyzer:
                             to_addr,
                             subject,
                             date,
-                            body
+                            body,
+                            original_recipient
                         ])
         
         print(f"✓ Comprehensive email details saved to: {output_file}")
