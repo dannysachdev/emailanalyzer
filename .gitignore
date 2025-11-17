@@ -1,0 +1,24 @@
+# Email data files (large)
+relpies1114/
+relpies1114.zip
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+
+# Analysis outputs
+categories.json
+analysis_report.txt
+email_categories.csv
+extracted_contacts.json
+extracted_contacts.csv
+enriched_contacts.json
+enriched_contacts.csv
+high_quality_leads.csv
