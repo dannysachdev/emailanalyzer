@@ -32,7 +32,19 @@ However, they are **excluded from git commits** (via `.gitignore`) to keep the r
 
 ## 📥 How to Get the Files
 
-Since the CSV files are not committed to git, here are your options:
+### ⭐ NEW: Sample CSV Files Now Available!
+
+**Sample CSV files are now included in the repository** for easy download:
+- [`sample_email_categories.csv`](sample_email_categories.csv)
+- [`sample_enriched_contacts.csv`](sample_enriched_contacts.csv)
+- [`sample_high_quality_leads.csv`](sample_high_quality_leads.csv)
+- [`sample_extracted_contacts.csv`](sample_extracted_contacts.csv)
+
+These samples show the exact format and structure of the output files. See [SAMPLE_CSV_README.md](SAMPLE_CSV_README.md) for details.
+
+### Options for Getting Full CSV Files
+
+Since the full CSV files are not committed to git (to keep repository size manageable), here are your options:
 
 ### Option 1: Download from This Environment (If Available)
 If you're viewing this in a development environment, the files are in the current directory:
