@@ -13,7 +13,7 @@ env/
 venv/
 .venv
 
-# Analysis outputs
+# Analysis outputs (generated files)
 categories.json
 analysis_report.txt
 email_categories.csv
@@ -22,3 +22,6 @@ extracted_contacts.csv
 enriched_contacts.json
 enriched_contacts.csv
 high_quality_leads.csv
+
+# Allow sample CSV files
+!sample_*.csv
