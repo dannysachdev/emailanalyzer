@@ -43,6 +43,7 @@ The analyzer processes all emails in the `relpies1114/` directory recursively an
 - Real-time progress updates
 - Category-based statistics
 - Detailed listings of emails in each category
+- CSV export for spreadsheet analysis
 - JSON export for further processing
 
 ## Categories Explained
@@ -121,6 +122,7 @@ This executes:
 - `enriched_contacts.csv` - Full enriched contact database sorted by lead score
 - `high_quality_leads.csv` - Only high-quality leads (score ≥ 70)
 - `extracted_contacts.csv` - Raw extracted contact data
+- `email_categories.csv` - All emails with their categories in CSV format
 - `analysis_report.txt` - Detailed email categorization report
 - `categories.json` - Email categories in JSON format
 

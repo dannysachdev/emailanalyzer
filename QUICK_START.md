@@ -41,7 +41,7 @@ This will:
 ```bash
 python3 analyze_emails.py
 ```
-Output: `analysis_report.txt`, `categories.json`
+Output: `analysis_report.txt`, `categories.json`, `email_categories.csv`
 
 **Step 2: Extract contacts**
 ```bash
@@ -68,19 +68,25 @@ Output: `enriched_contacts.csv`, `high_quality_leads.csv`
 - JSON format for programmatic access
 - Use for: API integration, custom processing
 
-### 3. enriched_contacts.csv
+### 3. email_categories.csv
+📊 **All emails with categories in CSV format (50,215 emails)**
+- Each email with its assigned category
+- Columns: Email Filename, Category, Category Name
+- Use for: Spreadsheet analysis, filtering, pivot tables
+
+### 4. enriched_contacts.csv
 👥 **Full contact database (388 contacts)**
 - Sorted by lead score (highest first)
 - Includes: name, email, phone, title, company
 - Use for: CRM import, full contact list
 
-### 4. high_quality_leads.csv
+### 5. high_quality_leads.csv
 ⭐ **Best leads only (245 contacts)**
 - Score ≥ 70 (high quality)
 - Ready for immediate action
 - Use for: Priority follow-up, LinkedIn outreach
 
-### 5. extracted_contacts.json
+### 6. extracted_contacts.json
 📋 **Raw contact data in JSON**
 - All extracted information
 - Use for: Custom processing, database import

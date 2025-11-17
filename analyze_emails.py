@@ -10,6 +10,7 @@ from email import policy
 from collections import defaultdict
 from pathlib import Path
 import json
+import csv
 
 
 class EmailAnalyzer:
@@ -269,6 +270,20 @@ class EmailAnalyzer:
             json.dump(self.categories, f, indent=2)
         print(f"Categories saved to: {output_file}")
     
+    def save_categories_csv(self, output_file='email_categories.csv'):
+        """Save categorized emails to CSV file"""
+        with open(output_file, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['Email Filename', 'Category', 'Category Name'])
+            
+            # Write all emails with their categories
+            for category, emails in sorted(self.categories.items()):
+                category_name = category.replace('_', ' ').title()
+                for email_file in sorted(emails):
+                    writer.writerow([email_file, category, category_name])
+        
+        print(f"Categories CSV saved to: {output_file}")
+    
     def print_summary(self):
         """Print a summary of the analysis"""
         total = sum(len(emails) for emails in self.categories.values())
@@ -317,10 +332,14 @@ def main():
     # Save categories to JSON
     analyzer.save_categories_json('categories.json')
     
+    # Save categories to CSV
+    analyzer.save_categories_csv('email_categories.csv')
+    
     print("\n✓ Analysis complete!")
     print("  - Summary displayed above")
     print("  - Detailed report: analysis_report.txt")
     print("  - JSON data: categories.json")
+    print("  - CSV data: email_categories.csv")
 
 
 if __name__ == '__main__':
