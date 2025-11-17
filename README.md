@@ -8,8 +8,10 @@ A Python tool to analyze and categorize large volumes of emails into different t
 - ✅ All emails in a single downloadable file
 - ✅ Includes **To** field (recipients)
 - ✅ Includes **Body** preview (first 500 chars)
+- ✅ Includes **Original_Recipient** - Who the outbound email was sent to (for bounces & auto-replies)
 - ✅ Includes From, Subject, Date, Category
 - ✅ Perfect for importing to databases or spreadsheets
+- ✅ **Filter bounce lists** - Identify which email addresses bounced to clean your lists
 
 📖 **See [COMPREHENSIVE_EXPORT.md](COMPREHENSIVE_EXPORT.md) for detailed documentation**
 
@@ -160,8 +162,18 @@ The `comprehensive_email_details.csv` file contains **ALL email information in a
 - Subject line
 - Date
 - **Body preview** (first 500 characters)
+- **Original_Recipient** - The email address that your outbound email was sent to (extracted from bounces, auto-replies, and action required notifications)
 
 This file is perfect for importing into spreadsheets or databases for further analysis!
+
+#### 🎯 Use Original_Recipient to Clean Your Email Lists
+
+The `Original_Recipient` column helps you identify problematic email addresses:
+- **Bounces**: See which addresses are invalid or no longer exist
+- **Auto-replies**: Identify addresses that are no longer in use
+- **Action Required**: Find addresses with SPF/deliverability issues
+
+Filter the CSV by category and Original_Recipient to build a list of addresses to remove from future campaigns!
 
 ## Requirements
 
